@@ -233,9 +233,7 @@ void Reader::do_read_mesh_into(const URI& file, Mesh& mesh)
     ++i;
   }
 
-  m_total_nb_nodes = m_vv[0].size();
-
-  CFdebug << "smurf: nb_nodes : " << m_total_nb_nodes << CFendl
+  CFdebug << "smurf: nb_nodes : " << m_vv[0].size() << CFendl
           << "       dimension: " << Shared::dim_name[m_mesh_dimension] << CFendl;
 
   cf3_assert(is_not_null(m_mesh));
