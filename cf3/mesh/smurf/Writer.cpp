@@ -67,7 +67,6 @@ std::vector<std::string> Writer::get_extensions()
 
 void Writer::write()
 {
-
   const common::Table<Real>& coordinates = m_mesh->geometry_fields().coordinates();
   const Uint
       dimension = coordinates.row_size(),
@@ -77,13 +76,12 @@ void Writer::write()
   if (PE::Comm::instance().size() > 1)
     path = boost::filesystem::basename(path) + "_P" + to_str(PE::Comm::instance().rank()) + boost::filesystem::extension(path);
 
-  SmURF::MeshWriter mwriter(path.string(), SmURF::DOUBLE, false, 107, m_mesh->metadata().properties().value<Real>("time")); // add solution time here if needed !
-
   // Get variable names
   std::vector< std::string > vn;
   std::vector< std::vector<double> > vv;
   vn.reserve(dimension+m_fields.size());
   vv.reserve(vn.size());
+  double solution_time = 0.;
 
   // loop over coordinates
   for (Uint d = 0; d < dimension; ++d)
@@ -102,6 +100,7 @@ void Writer::write()
   boost_foreach(Handle<Field const> field_ptr, m_fields)
   {
     const Field& field = *field_ptr;
+    solution_time = std::max(solution_time, field.properties().value<double>("time"));
     Uint var_idx(0);
     for (Uint iVar=0; iVar<field.nb_vars(); ++iVar)
     {
@@ -175,7 +174,7 @@ void Writer::write()
                 }
               }
               vv.push_back(nodal_data);
-              vv.push_back(var_name);
+              vn.push_back(var_name);
             }
           }
 #else
@@ -294,6 +293,10 @@ void Writer::write()
       }
     }
   }
+
+
+  // write main header
+  SmURF::MeshWriter mwriter(path.string(), SmURF::DOUBLE, false, 107, solution_time); // add solution time here if needed !
 
   mwriter.writeMainHeader("COOLFluiD_Mesh_Data",vn);
 
