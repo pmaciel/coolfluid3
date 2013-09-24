@@ -8,6 +8,9 @@
 #   PARDISO_LIBRARIES
 #   CF3_HAVE_PARDISO
 #
+
+# IMPORTANT: on linux compilation with -fopenmp flag is mandatory
+
 option( CF3_SKIP_PARDISO "Skip search for Pardiso library" OFF )
 
 if( NOT CF3_SKIP_PARDISO )
@@ -28,7 +31,11 @@ if( NOT CF3_SKIP_PARDISO )
   find_library(PARDISO_LIBRARY pardiso )
 
   list(APPEND PARDISO_LIBRARIES ${PARDISO_LIBRARY})
-#${BLASLAPACK_LIBRARIES}
+
+  list(APPEND PARDISO_LIBRARIES  ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
+
+  message(STATUS ${PARDISO_LIBRARIES})
+
   # if(MUPHYS_HAVE_IOMP5 AND APPLE)
   #   list(APPEND PARDISO_LIBRARIES ${IOMP5_LIBRARIES})
   # endif()
