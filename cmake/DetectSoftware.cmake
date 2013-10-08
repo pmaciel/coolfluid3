@@ -55,6 +55,7 @@ find_package(Realtime          QUIET ) # POSIX Realtime library
 find_package(Valgrind          QUIET ) # valgrind for profiling and memmory leak detection
 find_package(GooglePerftools   QUIET ) # dynamic profiler and memory checker
 find_package(PThread           QUIET ) # POSIX Threads library
+find_package(Dlib              QUIET ) # Dlib
 
 # packages that enhance functionality
 # this will appear on the list of enabled features
@@ -84,8 +85,10 @@ find_package(Parmetis)        # parallel domain decomposition
 find_package(Zoltan)          # parallel and serial domain decomposition using parmetis or pt-scotch
 find_package(Curl)            # curl downloads files on the fly
 find_package(CGNS)            # CGNS library
-find_package(SuperLU)         # SuperLU sparse sirect solver
+find_package(SuperLU)         # SuperLU sparse direct solver
 find_package(Trilinos)        # Trilinos sparse matrix library
+find_package(Pardiso)         # Pardiso sparse direct solver
+find_package(PardisoMKL)      # MKL implementation of Pardiso sparse direct solver
 find_package(Gnuplot QUIET)   # Find gnuplot executable
 coolfluid_set_package(PACKAGE Gnuplot DESCRIPTION "Gnuplot executable" VARS GNUPLOT_EXECUTABLE )
 
