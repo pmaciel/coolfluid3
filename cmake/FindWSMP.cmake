@@ -9,8 +9,6 @@ if( NOT CF3_SKIP_WSMP )
   coolfluid_set_trial_library_path( ${WSMP_HOME}/lib $ENV{WSMP_HOME}/lib )
   find_library(WSMP_LIBRARIES wsmp64 ${TRIAL_LIBRARY_PATHS} NO_DEFAULT_PATH)
   find_library(WSMP_LIBRARIES wsmp64)
-  message("WSMP_HOME: "${WSMP_HOME})
-  message("WSMP_LIBS: "${WSMP_LIBRARIES})
 
 endif()
 
