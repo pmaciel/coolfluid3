@@ -1,7 +1,7 @@
 
 # module to look for PETSc (in a simple way...), defining the following values
-# PESTC_INCLUDE_DIRS = where headers can be found
-# PESTC_CONFIG_DIRS  = where headers can be found
+# PETSC_INCLUDE_DIRS = where headers can be found
+# PETSC_LIBRARIES    = where libraries can be found
 # CF3_HAVE_PETSC     = set to true after finding the library
 
 option( CF3_SKIP_PETSC "Skip search for PETSc" OFF )
