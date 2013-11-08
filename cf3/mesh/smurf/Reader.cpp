@@ -138,6 +138,7 @@ void Reader::do_read_mesh_into(const URI& file, Mesh& mesh)
     mreader.readZoneData(zone,ve,!i?m_vv:dump);
     if (dump.size())
       throw NotSupported(FromHere(), "Sorry! Only binary tecplot files with varsharelists are supported (i.e. all node data should be attributed to the first zone)");
+    ++i;  // (not used further in this scope)
 
     std::string cf_elem_name;
     // correct connectivity numbering
@@ -230,7 +231,6 @@ void Reader::do_read_mesh_into(const URI& file, Mesh& mesh)
     for (int i=0; i<ve.size(); ++i)
       for (int j=0; j<ve[i].size(); ++j)
         elem_table[i][j] = ve[i][j];
-    ++i;
   }
 
   CFdebug << "smurf: nb_nodes : " << m_vv[0].size() << CFendl
