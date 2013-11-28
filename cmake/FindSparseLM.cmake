@@ -22,7 +22,7 @@ if( NOT CF3_SKIP_SPARSELM )
   list(APPEND SPARSELM_LIBRARIES ${SPARSELM_LIBRARY})
 
 
-endif( NOT CF3_SKIP_SPARSELM )
+endif()
 
 coolfluid_set_package(
   PACKAGE sparseLM

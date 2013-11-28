@@ -22,7 +22,7 @@ if( NOT CF3_SKIP_LEVMAR )
   list(APPEND LEVMAR_LIBRARIES ${LEVMAR_LIBRARY})
 
 
-endif( NOT CF3_SKIP_LEVMAR )
+endif()
 
 coolfluid_set_package(
   PACKAGE levmar
