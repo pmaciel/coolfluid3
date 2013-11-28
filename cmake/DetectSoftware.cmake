@@ -87,8 +87,9 @@ find_package(Curl)            # curl downloads files on the fly
 find_package(CGNS)            # CGNS library
 find_package(SuperLU)         # SuperLU sparse direct solver
 find_package(Trilinos)        # Trilinos sparse matrix library
+find_package(Levmar)          # Levenberg-Marquardt optimization library (small-scale, dense implementation)
+find_package(SparseLM)        # Levenberg-Marquardt optimization library (large-scale, sparse implementation)
 find_package(Pardiso)         # Pardiso sparse direct solver
-find_package(PardisoMKL)      # MKL implementation of Pardiso sparse direct solver
 find_package(PETSc)           # Portable, Extensible Toolkit for Scientific Computation
 find_package(IntelMKL)        # Intel Math Kernel Library
 find_package(WSMP)            # Watson Sparse Matrix Package
