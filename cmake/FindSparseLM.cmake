@@ -25,9 +25,9 @@ if( NOT CF3_SKIP_SPARSELM )
 endif()
 
 coolfluid_set_package(
-  PACKAGE sparseLM
-  DESCRIPTION "Levenberg-Marquardt optimization library (large-scale, sparse implementation)"
-  URL "http://users.ics.forth.gr/~lourakis/sparseLM"
-  TYPE OPTIONAL
-  VARS SPARSELM_LIBRARIES SPARSELM_INCLUDE_DIRS )
+  PACKAGE     sparseLM
+  DESCRIPTION "Levenberg-Marquardt optimization library, large-scale sparse implementation"
+  URL         "http://users.ics.forth.gr/~lourakis/sparseLM"
+  TYPE        OPTIONAL
+  VARS        SPARSELM_LIBRARIES SPARSELM_INCLUDE_DIRS )
 

@@ -25,9 +25,9 @@ if( NOT CF3_SKIP_LEVMAR )
 endif()
 
 coolfluid_set_package(
-  PACKAGE levmar
-  DESCRIPTION "Levenberg-Marquardt optimization library (small-scale, dense implementation)"
-  URL "http://users.ics.forth.gr/~lourakis/levmar"
-  TYPE OPTIONAL
-  VARS LEVMAR_LIBRARIES LEVMAR_INCLUDE_DIRS )
+  PACKAGE     levmar
+  DESCRIPTION "Levenberg-Marquardt optimization library, small-scale dense implementation"
+  URL         "http://users.ics.forth.gr/~lourakis/levmar"
+  TYPE        OPTIONAL
+  VARS        LEVMAR_LIBRARIES LEVMAR_INCLUDE_DIRS )
 
