@@ -11,7 +11,7 @@ option( CF3_SKIP_SPARSELM "Skip search for sparseLM library" OFF )
 if( NOT CF3_SKIP_SPARSELM )
 
 
-  if (DEFINED ${SPARSELM_HOME} OR DEFINED $ENV{SPARSELM_HOME})
+  if (DEFINED SPARSELM_HOME OR DEFINED ENV{SPARSELM_HOME})
     coolfluid_set_trial_include_path(${SPARSELM_HOME} $ENV{SPARSELM_HOME})
     coolfluid_set_trial_library_path(${SPARSELM_HOME} $ENV{SPARSELM_HOME})
   endif()

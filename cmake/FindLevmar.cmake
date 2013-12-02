@@ -11,7 +11,7 @@ option( CF3_SKIP_LEVMAR "Skip search for levmar library" OFF )
 if( NOT CF3_SKIP_LEVMAR )
 
 
-  if (DEFINED ${LEVMAR_HOME} OR DEFINED $ENV{LEVMAR_HOME})
+  if (DEFINED LEVMAR_HOME OR DEFINED ENV{LEVMAR_HOME})
     coolfluid_set_trial_include_path(${LEVMAR_HOME} $ENV{LEVMAR_HOME})
     coolfluid_set_trial_library_path(${LEVMAR_HOME} $ENV{LEVMAR_HOME})
   endif()
