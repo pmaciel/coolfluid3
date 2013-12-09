@@ -26,10 +26,12 @@ if( NOT CF3_SKIP_INTELMKL )
 
   # look for libraries
   coolfluid_set_trial_library_path(
+    ${INTELMKL_HOME}/lib         $ENV{INTELMKL_HOME}/lib
     ${INTELMKL_HOME}/lib/intel64 $ENV{INTELMKL_HOME}/lib/intel64
     ${INTELMKL_HOME}/lib/ia32    $ENV{INTELMKL_HOME}/lib/ia32 )
   if( DEFINED IOMP5_HOME OR DEFINED ENV{IOMP5_HOME} )
     coolfluid_add_trial_library_path(
+      ${IOMP5_HOME}/lib         $ENV{IOMP5_HOME}/lib
       ${IOMP5_HOME}/lib/intel64 $ENV{IOMP5_HOME}/lib/intel64
       ${IOMP5_HOME}/lib/ia32    $ENV{IOMP5_HOME}/lib/ia32 )
   endif()
