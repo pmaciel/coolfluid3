@@ -99,6 +99,27 @@ namespace detail
   }
 
   template<>
+  void change_value<Complex>(boost::any& to_set, const boost::any& new_value)
+  {
+    if(new_value.type() == to_set.type())
+    {
+      to_set = new_value;
+    }
+    else
+    {
+      try
+      {
+        int uval = boost::any_cast<int>(new_value);
+        to_set = static_cast<Complex>(uval);
+      }
+      catch(boost::bad_any_cast& e)
+      {
+        throw CastingFailed(FromHere(), std::string("Failed to cast object of type ") + demangle(new_value.type().name()) + " to type Complex");
+      }
+    }
+  }
+
+  template<>
   void change_value<std::string>(boost::any& to_set, const boost::any& new_value)
   {
     if(new_value.type() == to_set.type())
@@ -109,19 +130,27 @@ namespace detail
     {
       try
       {
-        Real rval = boost::any_cast<Real>(new_value);
-        to_set = to_str(rval);
+        Complex cval = boost::any_cast<Complex>(new_value);
+        to_set = to_str(cval);
       }
       catch(boost::bad_any_cast& e)
       {
         try
         {
-          int uval = boost::any_cast<int>(new_value);
-          to_set = to_str(uval);
+          Real rval = boost::any_cast<Real>(new_value);
+          to_set = to_str(rval);
         }
-        catch(boost::bad_any_cast& e)
+        catch (boost::bad_any_cast& e)
         {
-          throw CastingFailed(FromHere(), std::string("Failed to cast object of type ") + demangle(new_value.type().name()) + " to type Real");
+          try
+          {
+            int uval = boost::any_cast<int>(new_value);
+            to_set = to_str(uval);
+          }
+          catch(boost::bad_any_cast& e)
+          {
+            throw CastingFailed(FromHere(), std::string("Failed to cast object of type ") + demangle(new_value.type().name()) + " to type Real/Complex");
+          }
         }
       }
     }
@@ -247,6 +276,7 @@ RegisterOptionBuilder int_builder(common::class_name<int>(), new OptionTBuilder<
 RegisterOptionBuilder string_builder(common::class_name<std::string>(), new OptionTBuilder<std::string>());
 RegisterOptionBuilder uint_builder(common::class_name<Uint>(), new OptionTBuilder<Uint>());
 RegisterOptionBuilder Real_builder(common::class_name<Real>(), new OptionTBuilder<Real>());
+RegisterOptionBuilder Complex_builder(common::class_name<Complex>(), new OptionTBuilder<Complex>());
 RegisterOptionBuilder uucount_builder(common::class_name<UUCount>(), new OptionTBuilder<UUCount>());
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -257,8 +287,9 @@ Common_TEMPLATE template class OptionT< int >;
 Common_TEMPLATE template class OptionT< std::string >;
 Common_TEMPLATE template class OptionT< cf3::Uint >;
 Common_TEMPLATE template class OptionT< cf3::Real >;
-Common_TEMPLATE template class OptionT< cf3::common::URI >;
+Common_TEMPLATE template class OptionT< cf3::Complex >;
 Common_TEMPLATE template class OptionT< cf3::common::UUCount >;
+Common_TEMPLATE template class OptionT< cf3::common::URI >;
 
 ////////////////////////////////////////////////////////////////////////////////
 

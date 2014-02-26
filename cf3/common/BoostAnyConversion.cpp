@@ -33,6 +33,8 @@ std::string any_to_str( const boost::any & value )
       return to_str(boost::any_cast<int>(value));
     else if (value_type == "real")
       return to_str(boost::any_cast<Real>(value));
+    else if (value_type == "complex")
+      return to_str(boost::any_cast<Complex>(value));
     else if (value_type == "string")
       return boost::any_cast<std::string>(value);
     else if (value_type == "uri")
@@ -47,6 +49,8 @@ std::string any_to_str( const boost::any & value )
       return to_str(boost::any_cast< std::vector<int> >(value));
     else if (value_type == "array[real]")
       return to_str(boost::any_cast< std::vector<Real> >(value));
+    else if (value_type == "array[complex]")
+      return to_str(boost::any_cast< std::vector<Complex> >(value));
     else if (value_type == "array[string]")
       return to_str(boost::any_cast< std::vector<std::string> >(value));
     else if (value_type == "array[uri]")
@@ -92,6 +96,7 @@ Common_TEMPLATE template bool any_to_value<bool>( const boost::any& );
 Common_TEMPLATE template int any_to_value<int>( const boost::any& );
 Common_TEMPLATE template Uint any_to_value<Uint>( const boost::any& );
 Common_TEMPLATE template Real any_to_value<Real>( const boost::any& );
+Common_TEMPLATE template Complex any_to_value<Complex>( const boost::any& );
 Common_TEMPLATE template std::string any_to_value<std::string>( const boost::any& );
 Common_TEMPLATE template URI any_to_value<URI>( const boost::any& );
 Common_TEMPLATE template UUCount any_to_value<UUCount>( const boost::any& );
@@ -100,6 +105,7 @@ Common_TEMPLATE template std::vector<bool> any_to_value< std::vector<bool> >( co
 Common_TEMPLATE template std::vector<int> any_to_value< std::vector<int> >( const boost::any& );
 Common_TEMPLATE template std::vector<Uint> any_to_value< std::vector<Uint> >( const boost::any& );
 Common_TEMPLATE template std::vector<Real> any_to_value< std::vector<Real> >( const boost::any& );
+Common_TEMPLATE template std::vector<Complex> any_to_value< std::vector<Complex> >( const boost::any& );
 Common_TEMPLATE template std::vector<std::string> any_to_value< std::vector<std::string> >( const boost::any& );
 Common_TEMPLATE template std::vector<URI> any_to_value< std::vector<URI> >( const boost::any& );
 Common_TEMPLATE template std::vector<UUCount> any_to_value< std::vector<UUCount> >( const boost::any& );

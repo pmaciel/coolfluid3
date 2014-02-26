@@ -14,6 +14,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <complex>
 
 #include <boost/noncopyable.hpp>
 #include <boost/checked_delete.hpp>
@@ -92,12 +93,15 @@ typedef unsigned int Uint;
 /// Definition of the default precision
 #ifdef CF3_REAL_IS_FLOAT
 typedef float Real;
+typedef std::complex< float > Complex;
 #endif
 #ifdef CF3_REAL_IS_DOUBLE
 typedef double Real;
+typedef std::complex< double > Complex;
 #endif
 #ifdef CF3_REAL_IS_LONGDOUBLE
 typedef long double Real;
+typedef std::complex< long double > Complex;
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////

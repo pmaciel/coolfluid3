@@ -25,8 +25,8 @@ namespace python {
 using namespace boost::fusion;
 
 // Types that can be held by any
-typedef boost::mpl::vector7<std::string, int, bool, Real, common::URI, common::UUCount, Handle<common::Component> > PythonToAnyTypes;
-typedef boost::mpl::vector9<std::string, Uint, int, bool, Real, common::URI, common::UUCount, Handle<common::Component>, Handle<common::Component const> > AnyToPythonTypes;
+typedef boost::mpl::vector8<std::string, int, bool, Real, Complex, common::URI, common::UUCount, Handle<common::Component> > PythonToAnyTypes;
+typedef boost::mpl::vector10<std::string, Uint, int, bool, Real, Complex, common::URI, common::UUCount, Handle<common::Component>, Handle<common::Component const> > AnyToPythonTypes;
 
 /// Extract the type string for the elements of a python list
 /// Only arrays with the same overall type are supported. Arrays containing a single
@@ -40,7 +40,9 @@ std::string python_list_element_type(const boost::python::list& pylist)
     std::string elem_type = type_name(pylist[i]);
     if(boost::starts_with(elem_type, "handle["))
       elem_type = common::class_name< Handle<common::Component> >();
-    if((result == common::class_name<int>() && elem_type == common::class_name<Real>()) || result.empty())
+    if( result.empty()
+      || (result == common::class_name<int>() && elem_type == common::class_name<Real>())
+      || (result == common::class_name<int>() && elem_type == common::class_name<Complex>()) )
     {
       // First assign or upgrade from integer
       result = elem_type;
@@ -48,7 +50,9 @@ std::string python_list_element_type(const boost::python::list& pylist)
     else
     {
       // Other elements must match
-      if(!(elem_type == result || (elem_type == common::class_name<int>() && result == common::class_name<Real>())))
+      if( !(elem_type == result
+        || (elem_type == common::class_name<int>() && result == common::class_name<Real>())
+        || (elem_type == common::class_name<int>() && result == common::class_name<Complex>()) ))
       {
         throw common::BadValue(FromHere(), "Python list element " + boost::lexical_cast<std::string>(i) + " does not match expected list type " + result);
       }
@@ -174,13 +178,23 @@ struct PythonToAny
 
   void operator()(const Real&) const
   {
-    if(m_found)
-      return;
-
-    if(type_name(m_value) != common::class_name<Real>() && type_name(m_value) != common::class_name<int>())
+    if(m_found
+      || (type_name(m_value) != common::class_name<Real>() && type_name(m_value) != common::class_name<int>()) )
       return;
 
     boost::python::extract<Real> extracted_value(m_value);
+    cf3_assert(extracted_value.check())
+    m_found = true;
+    m_result = extracted_value();
+  }
+
+  void operator()(const Complex&) const
+  {
+    if(m_found
+      || (type_name(m_value) != common::class_name<Complex>() && type_name(m_value) != common::class_name<int>()) )
+      return;
+
+    boost::python::extract<Complex> extracted_value(m_value);
     cf3_assert(extracted_value.check())
     m_found = true;
     m_result = extracted_value();
@@ -289,6 +303,7 @@ std::string type_name(const boost::python::api::object& python_object)
                               (std::string(PyInt_Type.tp_name), common::class_name<int>())
                               (std::string(PyString_Type.tp_name), common::class_name<std::string>())
                               (std::string(PyFloat_Type.tp_name), common::class_name<Real>())
+                              (std::string(PyComplex_Type.tp_name), common::class_name<Complex>())
                               (std::string(PyList_Type.tp_name), "array") // Special indication of lists
                               (std::string("URI"), common::class_name<common::URI>()) // "URI" as passed in the boost::python::class_ definition
                               (std::string("UUCount"), common::class_name<common::UUCount>()) // Same as URI

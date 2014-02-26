@@ -147,6 +147,8 @@ void PropertyList::set(const std::string& arg)
      store[name]=from_str<int>(value);
    else if (type == "real")
      store[name]=from_str<Real>(value);
+   else if (type == "complex")
+     store[name]=from_str<Complex>(value);
    else if (type == "string")
      store[name]=value;
    else if (type == "uri")
@@ -201,6 +203,13 @@ void PropertyList::set(const std::string& arg)
        std::vector<Real> vec; vec.reserve(array.size());
        boost_foreach(const std::string& str_val,array)
            vec.push_back(from_str<Real>(str_val));
+       store[name]=vec;
+     }
+     else if (subtype == "complex")
+     {
+       std::vector<Complex> vec; vec.reserve(array.size());
+       boost_foreach(const std::string& str_val,array)
+           vec.push_back(from_str<Complex>(str_val));
        store[name]=vec;
      }
      else if (subtype == "string")

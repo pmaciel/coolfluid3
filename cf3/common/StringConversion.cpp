@@ -101,6 +101,23 @@ namespace common {
     return oss.str();
   }
 
+  template <>
+  Common_API std::string to_str< std::complex< float> > (const std::complex<float> & v)
+  {
+    std::ostringstream oss;
+    oss << std::scientific << std::setprecision(std::numeric_limits<float>::digits10+1);
+    oss << v;
+    return oss.str();
+  }
+
+  template <>
+  Common_API std::string to_str< std::complex<double> > (const std::complex<double> & v)
+  {
+    std::ostringstream oss;
+    oss << std::scientific << std::setprecision(std::numeric_limits<double>::digits10+1);
+    oss << v;
+    return oss.str();
+  }
 
   template <>
   Common_API std::string to_str<URI> (const URI & v)
@@ -174,6 +191,19 @@ namespace common {
 
   template <>
   Common_API std::string to_str<std::vector<Real> > (const std::vector<Real> & v)
+  {
+    std::string s = "";
+    if (v.size())
+    {
+      for (Uint i=0; i<v.size()-1; ++i)
+        s += to_str(v[i]) + " ";
+      s += to_str(v.back());
+    }
+    return s;
+  }
+
+  template <>
+  Common_API std::string to_str<std::vector<Complex> > (const std::vector<Complex> & v)
   {
     std::string s = "";
     if (v.size())
@@ -315,6 +345,38 @@ namespace common {
     if (*error != 0)
     {
       throw ParsingFailed(FromHere(), "String " + str + " could not be parsed as a number");
+    }
+    return result;
+  }
+
+  template <>
+  Common_API std::complex<float> from_str< std::complex<float> > (const std::string& str)
+  {
+    std::complex<float> result;
+    try
+    {
+      std::istringstream iss(str);
+      iss >> result;
+    }
+    catch (const std::ios_base::failure&)
+    {
+      throw ParsingFailed(FromHere(), "String " + str + " could not be parsed as a complex number");
+    }
+    return result;
+  }
+
+  template <>
+  Common_API std::complex<double> from_str< std::complex<double> > (const std::string& str)
+  {
+    std::complex<double> result;
+    try
+    {
+      std::istringstream iss(str);
+      iss >> result;
+    }
+    catch (const std::ios_base::failure&)
+    {
+      throw ParsingFailed(FromHere(), "String " + str + " could not be parsed as a complex number");
     }
     return result;
   }

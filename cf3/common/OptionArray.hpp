@@ -102,7 +102,11 @@ private:
       throw ParsingFailed (FromHere(), "OptionArray does not have \'type\' attribute" );
 
     const std::string node_type(attr->value());
-    if (node_type != element_type() && !(node_type == "integer" && (element_type() == "real") || (element_type() == "unsigned") ) && !boost::starts_with(node_type, "handle["))
+    if ( (node_type != element_type())
+        && !(boost::starts_with(node_type, "handle["))
+        && !( (element_type()=="real")    && (node_type=="integer")
+           || (element_type()=="complex") && (node_type=="integer")
+           || (element_type()=="unsigned") ))
       throw ParsingFailed (FromHere(), "OptionArray expected \'type\' attribute \'"
       +  std::string(attr->value())
       + "\' but got \'"

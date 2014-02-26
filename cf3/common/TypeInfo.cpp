@@ -53,6 +53,7 @@ TypeInfo::TypeInfo()
   regist<std::string>("string");
   regist<bool>("bool");
   regist<cf3::Real>("real");
+  regist<cf3::Complex>("complex");
   regist<common::URI>("uri");
   regist<common::UUCount>("uucount");
   regist<std::vector<int> >("array[integer]");
@@ -60,6 +61,7 @@ TypeInfo::TypeInfo()
   regist<std::vector<std::string> >("array[string]");
   regist<std::vector<bool> >("array[bool]");
   regist<std::vector<Real> >("array[real]");
+  regist<std::vector<Complex> >("array[complex]");
   regist<std::vector<common::URI> >("array[uri]");
 }
 
