@@ -296,7 +296,7 @@ void Writer::write()
 
 
   // write main header
-  SmURF::MeshWriter mwriter(path.string(), SmURF::DOUBLE, false, 107, solution_time); // add solution time here if needed !
+  SmURF::MeshWriter mwriter(path.string(), SmURF::DOUBLE, false, 107); // add solution time here if needed !
 
   mwriter.writeMainHeader("COOLFluiD_Mesh_Data",vn);
 
@@ -348,7 +348,7 @@ void Writer::write()
     CFdebug << "smurf: writing zone header \"" << zone_name << "\"" << CFendl
             << "       tec_type: " << zone_type(etype)  << CFendl
             << "       nb_elems: " << nb_elems          << CFendl;
-    mwriter.writeZoneHeader(zone_type(etype),SmURF::BLOCK,zone_name, nb_nodes, nb_elems, 1, zone_idx);
+    mwriter.writeZoneHeader(zone_type(etype),SmURF::BLOCK,zone_name, nb_nodes, nb_elems, 1, solution_time, zone_idx);
 
     // TODO: implement cell-centered vars
 #if 0
