@@ -15,39 +15,47 @@ option( CF3_SKIP_INTELMKL "Skip search for MKL Pardiso library" OFF )
 if( NOT CF3_SKIP_INTELMKL )
 
 
-  # look for headers
-  coolfluid_set_trial_include_path(
-    ${INTELMKL_HOME}/include $ENV{INTELMKL_HOME}/include )
+  # setup library search directories
+  coolfluid_set_trial_include_path("")
+  coolfluid_set_trial_library_path("")
+  if( DEFINED INTELMKL_HOME )
+    coolfluid_add_trial_include_path(${INTELMKL_HOME}/include)
+    coolfluid_add_trial_library_path(${INTELMKL_HOME}/lib)
+    coolfluid_add_trial_library_path(${INTELMKL_HOME}/lib/intel64)
+    coolfluid_add_trial_library_path(${INTELMKL_HOME}/lib/ia32)
+  endif()
+  if( DEFINED ENV{INTELMKL_HOME} )
+    coolfluid_add_trial_include_path($ENV{INTELMKL_HOME}/include)
+    coolfluid_add_trial_library_path($ENV{INTELMKL_HOME}/lib)
+    coolfluid_add_trial_library_path($ENV{INTELMKL_HOME}/lib/intel64)
+    coolfluid_add_trial_library_path($ENV{INTELMKL_HOME}/lib/ia32)
+  endif()
+  if( DEFINED IOMP5_HOME )
+    coolfluid_add_trial_library_path(${IOMP5_HOME}/lib)
+    coolfluid_add_trial_library_path(${IOMP5_HOME}/lib/intel64)
+    coolfluid_add_trial_library_path(${IOMP5_HOME}/lib/ia32)
+  endif()
+  if( DEFINED ENV{IOMP5_HOME} )
+    coolfluid_add_trial_library_path($ENV{IOMP5_HOME}/lib)
+    coolfluid_add_trial_library_path($ENV{IOMP5_HOME}/lib/intel64)
+    coolfluid_add_trial_library_path($ENV{IOMP5_HOME}/lib/ia32)
+  endif()
 
-  find_path(INTELMKL_INCLUDE_DIR mkl_pardiso.h PATHS ${TRIAL_INCLUDE_PATHS}  NO_DEFAULT_PATH)
+  # look for headers
+  find_path(INTELMKL_INCLUDE_DIR mkl_pardiso.h PATHS ${TRIAL_INCLUDE_PATHS} NO_DEFAULT_PATH)
   find_path(INTELMKL_INCLUDE_DIR mkl_pardiso.h)
   list(APPEND INTELMKL_INCLUDE_DIRS ${INTELMKL_INCLUDE_DIR})
 
-
   # look for libraries
-  coolfluid_set_trial_library_path(
-    ${INTELMKL_HOME}/lib         $ENV{INTELMKL_HOME}/lib
-    ${INTELMKL_HOME}/lib/intel64 $ENV{INTELMKL_HOME}/lib/intel64
-    ${INTELMKL_HOME}/lib/ia32    $ENV{INTELMKL_HOME}/lib/ia32 )
-  if( DEFINED IOMP5_HOME OR DEFINED ENV{IOMP5_HOME} )
-    coolfluid_add_trial_library_path(
-      ${IOMP5_HOME}/lib         $ENV{IOMP5_HOME}/lib
-      ${IOMP5_HOME}/lib/intel64 $ENV{IOMP5_HOME}/lib/intel64
-      ${IOMP5_HOME}/lib/ia32    $ENV{IOMP5_HOME}/lib/ia32 )
-  endif()
-
   find_library(INTELMKL_COMPUTATIONAL mkl_core ${TRIAL_LIBRARY_PATHS} NO_DEFAULT_PATH)
-  if(WIN32 OR APPLE)
-    # Windows MKL Libraries
+  if( WIN32 OR APPLE )
     find_library(INTELMKL_INTERFACE NAMES mkl_intel_c mkl_intel_lp64 PATHS ${TRIAL_LIBRARY_PATHS} NO_DEFAULT_PATH) # 32/64-bit
     find_library(INTELMKL_THREADING NAMES mkl_intel_thread           PATHS ${TRIAL_LIBRARY_PATHS} NO_DEFAULT_PATH)
   else()
-    # Linux MKL Libraries
     find_library(INTELMKL_INTERFACE NAMES mkl_gf mkl_gf_lp64 PATHS ${TRIAL_LIBRARY_PATHS} NO_DEFAULT_PATH) # 32/64-bit
     find_library(INTELMKL_THREADING NAMES mkl_gnu_thread     PATHS ${TRIAL_LIBRARY_PATHS} NO_DEFAULT_PATH)
   endif()
   list(APPEND INTELMKL_LIBRARIES ${INTELMKL_COMPUTATIONAL} ${INTELMKL_INTERFACE} ${INTELMKL_THREADING})
-
 
   # extra library dependencies for static linking
   if(NOT BUILD_SHARED_LIBS OR "${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")

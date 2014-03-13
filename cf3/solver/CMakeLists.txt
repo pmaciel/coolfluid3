@@ -5,6 +5,8 @@ list( APPEND coolfluid_solver_files
   Action.cpp
   ActionDirector.hpp
   ActionDirector.cpp
+  ActionDirectorWithSkip.hpp
+  ActionDirectorWithSkip.cpp
   BC.hpp
   BC.cpp
   Criterion.hpp
@@ -19,6 +21,8 @@ list( APPEND coolfluid_solver_files
   CriterionMilestoneTime.cpp
   CriterionTime.hpp
   CriterionTime.cpp
+  ComputeCFL.hpp
+  ComputeCFL.cpp
   ComputeLNorm.cpp
   ComputeLNorm.hpp
   ComputeRHS.hpp

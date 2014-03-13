@@ -87,6 +87,7 @@ find_package(Curl)            # curl downloads files on the fly
 find_package(CGNS)            # CGNS library
 find_package(SuperLU)         # SuperLU sparse direct solver
 find_package(Trilinos)        # Trilinos sparse matrix library
+find_package(ALGLIB)          # Cross-platform numerical analysis and data processing library (used for optimization)
 find_package(Levmar)          # Levenberg-Marquardt optimization library (small-scale, dense implementation)
 find_package(SparseLM)        # Levenberg-Marquardt optimization library (large-scale, sparse implementation)
 find_package(Pardiso)         # Pardiso sparse direct solver
