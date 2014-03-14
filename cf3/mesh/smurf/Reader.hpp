@@ -31,7 +31,7 @@ class Mesh;
 
 namespace smurf {
 
-//////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 /// This class defines smurf mesh format reader
 /// @author Willem Deconinck
@@ -45,17 +45,21 @@ public: // functions
   /// Gets the Class name
   static std::string type_name() { return "Reader"; }
 
-  virtual std::string get_format() { return "Smurf"; }
+  std::string get_format() { return "Smurf"; }
 
-  virtual std::vector<std::string> get_extensions();
+  std::vector<std::string> get_extensions();
 
 private: // functions
 
   Handle<Region> create_region(std::string const& relative_path);
 
-private: // data
+  void do_read_mesh_into(const common::URI& fp, Mesh& mesh);
 
-  virtual void do_read_mesh_into(const common::URI& fp, Mesh& mesh);
+  Uint do_read_mesh_dimensions(
+    const std::vector< std::string > &vnames,
+    const Uint &optdim ) const;
+
+private: // data
 
   Handle<Mesh> m_mesh;
   Handle<Region> m_region;
