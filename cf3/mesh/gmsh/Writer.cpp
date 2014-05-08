@@ -679,7 +679,7 @@ void Writer::write_nodal_data(std::fstream& file)
         // add 1 real tag: time
         file << 1 << "\n" << field_time << "\n";  // 1 real tag: time
         // add 3 integer tags: time_step, variable_type, nb elements
-        file << 4 << "\n" << field_iter << "\n" << datasize << "\n" << nb_elements <<"\n" << PE::Comm::instance().rank()+1 << "\n";
+        file << 4 << "\n" << field_iter << "\n" << datasize << "\n" << used_nodes.size() <<"\n" << PE::Comm::instance().rank()+1 << "\n";
 
         boost_foreach (const Handle<Entities const>& elements_handle, filtered_used_entities_by_field)
         {
