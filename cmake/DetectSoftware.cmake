@@ -94,6 +94,7 @@ find_package(Pardiso)         # Pardiso sparse direct solver
 find_package(PETSc)           # Portable, Extensible Toolkit for Scientific Computation
 find_package(IntelMKL)        # Intel Math Kernel Library
 find_package(WSMP)            # Watson Sparse Matrix Package
+find_package(LIS)             # Library of Iterative Solvers for linear systems
 find_package(Gnuplot QUIET)   # Find gnuplot executable
 coolfluid_set_package(PACKAGE Gnuplot DESCRIPTION "Gnuplot executable" VARS GNUPLOT_EXECUTABLE )
 
